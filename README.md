@@ -6,6 +6,8 @@ Na fase anterior do Tech Challenge, desenvolvemos um aplicativo .NET para cadast
 
 Nesta terceira fase, vamos aprimorar o projeto através de microsserviços e comunicação por mensageria. Mantendo também o funcionamento da fase anterior.
 
+![Descrição da imagem](LocalFriendzApi/imgs/requisitos.png)
+
 # Objetivos
 
 - **Arquitetura de Microsserviços:**
