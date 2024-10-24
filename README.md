@@ -1,19 +1,22 @@
-# Tech Challenger - CI/CD e Monitoramento
+# Tech Challenger - Microsserviços e Mensageria
 
 # Introdução
 
-Na fase anterior do Tech Challenge, desenvolvemos um aplicativo .NET para cadastro de contatos regionais, com funcionalidades de adicionar, consultar, atualizar e excluir contatos, utilizando Entity Framework Core ou Dapper para persistência de dados e implementando validações de dados.
+Na fase anterior do Tech Challenge, desenvolvemos um aplicativo .NET para cadastro de contatos regionais, com funcionalidades de adicionar, consultar, atualizar e excluir contatos, utilizando Entity Framework Core ou Dapper para persistência de dados e implementando validações de dados. Além da criação de CI/CD e monitoramento.
 
-Nesta segunda fase, vamos aprimorar o projeto através da integração de práticas avançadas, como Integração Contínua (CI), testes de integração, e monitoramento de performance com Prometheus e Grafana.
+Nesta terceira fase, vamos aprimorar o projeto através de microsserviços e comunicação por mensageria. Mantendo também o funcionamento da fase anterior.
 
 # Objetivos
 
-- **Testes de Integração**:
-  - Garantir que todos os componentes do sistema funcionem corretamente quando integrados.
-- **Integração Contínua (CI) com GitHub Actions**:
-  - Automação dos processos de build, testes unitários e testes de integração.
-- **Monitoramento com Prometheus e Grafana**:
-  - Implementação de métricas de monitoramento para avaliar a saúde e o desempenho do aplicativo.
+- **Arquitetura de Microsserviços:**
+    - refatorar o aplicativo existente em um
+    conjunto de microsserviços em que tenhamos as funcionalidades
+    separadas por contexto. Ex.: o cadastro ser um microsserviço que
+    envia dados para um outro microsserviço persistir os dados.
+- **Comunicação Assíncrona com Mensageria:**
+    - implementar comunicação assíncrona usando RabbitMQ para eventos entre os
+    microsserviços. Ex.: adicionar o RabbitMQ para comunicação entre os
+    microsserviços.
 
 # Tecnologias Utilizadas:
 
@@ -39,7 +42,11 @@ Nesta segunda fase, vamos aprimorar o projeto através da integração de práti
 
 # **Checklist de Conclusão de Tarefas**
 
-- [x] GitHub Actions
-- [x] Prometheus
-- [x] Grafana
-- [x] Vídeo exibindo a entrega
+1. Microsserviços
+  - [ ]  Microsserviços para cadastro de contato.(Consumer)
+2. Padrões de Comunicações
+  - [ ]  Pesquisar sobre padrões de comunicação e procurar aplicar.
+3. Mensageria com RaabbitMq
+  - [ ]  Producer cadastrar o contato na fila
+4. Microsserviços
+  - [ ]  Refatorações gerais e pipeline funcionando.
