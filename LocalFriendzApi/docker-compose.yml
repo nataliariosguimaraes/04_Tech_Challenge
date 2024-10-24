@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5005:5005"
+      - "5006:5006"
+    environment:
+      # se precisar rodar local substitua 'Host=db' por 'Host=localhost'
+      - ConnectionStrings__PostgreSqlConnection=Host=db;Database=DB_FIAP_ARQUITETO;Username=postgres;Password=Teste@123
+      - ASPNETCORE_URLS=http://+:5006
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db
+    networks:
+      - db-network
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: DB_FIAP_ARQUITETO
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Teste@123
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./scripts/FiapDB.sql:/docker-entrypoint-initdb.d/FiapDB.sql
+    networks:
+      - db-network
+networks:
+  db-network:
+    driver: bridge

@@ -1,0 +1,6 @@
+@LocalFriendzApi_HostAddress = http://localhost:5129
+
+GET {{LocalFriendzApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
