@@ -1,3 +1,5 @@
+CREATE DATABASE DB_FIAP_ARQUITETO;
+
 -- Conectar ao banco de dados recém-criado
 \c DB_FIAP_ARQUITETO;
 
@@ -20,4 +22,3 @@ CREATE TABLE public."TB_CONTACT" (
 DO $$ BEGIN
     RAISE NOTICE 'Tabela TB_CONTACT criada com sucesso!';
 END $$;
-

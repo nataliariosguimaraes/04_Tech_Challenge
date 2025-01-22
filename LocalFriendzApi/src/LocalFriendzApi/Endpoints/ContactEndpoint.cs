@@ -4,6 +4,7 @@ using LocalFriendzApi.Commom.Api;
 using LocalFriendzApi.Core.Requests.Contact;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Text.Json;
 
 namespace LocalFriendzApi.Endpoints
 {
@@ -15,6 +16,8 @@ namespace LocalFriendzApi.Endpoints
                                   .WithTags("Contact");
 
             #region Endpoints
+
+            contactGroup.MapGet("api/get-phrase", GetPhrase);
 
             contactGroup.MapPost("api/create-contact", Create)
             .WithName("CreateContact")
@@ -43,14 +46,14 @@ namespace LocalFriendzApi.Endpoints
             .Produces((int)HttpStatusCode.InternalServerError)
             .WithOpenApi();
 
-             contactGroup.MapGet("api/get-by-id", GetById)
-            .WithName("GetByIdContact")
-            .WithSummary("Retrieve a contact record by id.")
-            .WithDescription("Fetches a contact record based on id to return the corresponding contact details.")
-            .Produces((int)HttpStatusCode.OK)
-            .Produces((int)HttpStatusCode.NotFound)
-            .Produces((int)HttpStatusCode.InternalServerError)
-            .WithOpenApi();
+            contactGroup.MapGet("api/get-by-id", GetById)
+           .WithName("GetByIdContact")
+           .WithSummary("Retrieve a contact record by id.")
+           .WithDescription("Fetches a contact record based on id to return the corresponding contact details.")
+           .Produces((int)HttpStatusCode.OK)
+           .Produces((int)HttpStatusCode.NotFound)
+           .Produces((int)HttpStatusCode.InternalServerError)
+           .WithOpenApi();
 
             contactGroup.MapPut("api/update-contact", UpdateContact)
             .WithName("UpdateContact")
@@ -82,11 +85,12 @@ namespace LocalFriendzApi.Endpoints
             #endregion
         }
 
-        /// <summary>
-        /// Gerar uma carga de contatos.
-        /// </summary>
-        /// <param name="contactServices">Contato service</param>
-        /// <returns></returns>
+        static IResult GetPhrase()
+        {
+            string phrase = "Olá mundo 3";
+            return Results.Ok(new { message = phrase });
+        }
+
         static async Task<IResult> CreateRandomContacts([FromServices] IContactServices contactServices)
         {
             var randomContacts = contactServices.ContactGenerator(100);
@@ -105,25 +109,12 @@ namespace LocalFriendzApi.Endpoints
             return Results.Ok("100 random contacts created successfully.");
         }
 
-        /// <summary>
-        /// Deletar contato.
-        /// </summary>
-        /// <param name="contactServices">Contato service</param>
-        /// <param name="id"></param>
-        /// <returns></returns>
         static async Task<IResult> DeleteContact([FromServices] IContactServices contactServices, Guid id)
         {
             var response = await contactServices.DeleteContact(id);
             return response.ConfigureResponseStatus();
         }
 
-        /// <summary>
-        /// Atualizar contato.
-        /// </summary>
-        /// <param name="contactServices">Contato service</param>
-        /// <param name="id">Id do contato</param>
-        /// <param name="request">Modelo do request</param>
-        /// <returns></returns>
         static async Task<IResult> UpdateContact([FromServices] IContactServices contactServices,
                                                  Guid id,
                                                  [FromBody] UpdateContactRequest request)
@@ -139,32 +130,26 @@ namespace LocalFriendzApi.Endpoints
             return response.ConfigureResponseStatus();
         }
 
-        /// <summary>
-        /// Criar contato.
-        /// </summary>
-        /// <param name="contactServices">Contato service</param>
-        /// <param name="validator">Validador service</param>
-        /// <param name="request">Create request</param>
-        /// <returns></returns>
         static async Task<IResult> Create([FromServices] IContactServices contactServices,
-                                          [FromServices] IValidator<CreateContactRequest> validator,
-                                          [FromBody] CreateContactRequest request)
+                                  [FromServices] IValidator<CreateContactRequest> validator,
+                                  [FromServices] IRabbitMQService rabbitMQService,
+                                  [FromBody] CreateContactRequest request)
         {
-            var validationResult = await validator.ValidateAsync(request);
+            // var validationResult = await validator.ValidateAsync(request);
 
-            if (!validationResult.IsValid)
-                return Results.ValidationProblem(validationResult.ToDictionary());
+            // if (!validationResult.IsValid)
+            //     return Results.ValidationProblem(validationResult.ToDictionary());
 
             var response = await contactServices.CreateAsync(request);
+
+
+            var message = JsonSerializer.Serialize(request);
+            rabbitMQService.SendMessage(message);
+
 
             return response.ConfigureResponseStatus();
         }
 
-        /// <summary>
-        /// Listar todos os contatos.
-        /// </summary>
-        /// <param name="contactServices">Contato service</param>
-        /// <returns></returns>
         static async Task<IResult> ListAll([FromServices] IContactServices contactServices)
         {
             GetAllContactRequest request = new();
@@ -172,12 +157,6 @@ namespace LocalFriendzApi.Endpoints
             return response.ConfigureResponseStatus();
         }
 
-        /// <summary>
-        /// Listar os contatos de acordo com o filtro.
-        /// </summary>
-        /// <param name="contactServices">Contato service</param>
-        /// <param name="request">Filtro request</param>
-        /// <returns></returns>
         static async Task<IResult> ListByFilter([FromServices] IContactServices contactServices, [AsParameters] GetByParamsRequest request)
         {
             var validationResult = request.Validator();
@@ -190,12 +169,6 @@ namespace LocalFriendzApi.Endpoints
             return response.ConfigureResponseStatus();
         }
 
-        /// <summary>
-        /// Obtém o contato de acordo com o id.
-        /// </summary>
-        /// <param name="contactServices">Contato service</param>
-        /// <param name="request">Filtro request</param>
-        /// <returns></returns>
         static async Task<IResult> GetById([FromServices] IContactServices contactServices, Guid id)
         {
             var response = await contactServices.GetById(id);

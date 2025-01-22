@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-app-deployment
+  labels:
+    app: dotnet-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-app
+  template:
+    metadata:
+      labels:
+        app: dotnet-app
+    spec:
+      containers:
+      - name: dotnet-app
+        image: natriosg/appcontato:latest
+        ports:
+        - containerPort: 5006
+        env:
+        - name: ConnectionStrings__PostgreSqlConnection
+          value: "Host=db-service.default.svc.cluster.local;Database=DB_FIAP_ARQUITETO;Username=postgres;Password=Teste@123;Pooling=true;Minimum Pool Size=0;Maximum Pool Size=100;"
+        - name: ASPNETCORE_URLS
+          value: "http://+:5006"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: RABBITMQ_HOST
+          value: "rabbitmq-service.default.svc.cluster.local"  
+        - name: RABBITMQ_PORT
+          value: "30072"

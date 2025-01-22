@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  FiapDB.sql: |
+    CREATE DATABASE DB_FIAP_ARQUITETO;
+    \c DB_FIAP_ARQUITETO;
+    DO $$ BEGIN
+        RAISE NOTICE 'Iniciando script de criação do banco e tabela...';
+    END $$;
+    CREATE TABLE public."TB_CONTACT" (
+        id_contact uuid NOT NULL,
+        "name" varchar NOT NULL,
+        phone varchar NOT NULL,
+        "DDD" varchar NOT NULL,
+        email varchar NOT NULL,
+        CONSTRAINT "PK_TB_CONTACT" PRIMARY KEY (id_contact)
+    );
+    DO $$ BEGIN
+        RAISE NOTICE 'Tabela TB_CONTACT criada com sucesso!';
+    END $$;

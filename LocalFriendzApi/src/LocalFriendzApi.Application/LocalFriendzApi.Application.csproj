@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LocalFriendzApi.Core\LocalFriendzApi.Core.csproj" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
   </ItemGroup>
 
 </Project>

@@ -37,6 +37,7 @@ namespace LocalFriendzApi.Commom.Api
                 .Services
                 .AddTransient<IContactServices, ContactServices>();
 
+
             builder.Services.AddOpenTelemetry()
                 .WithMetrics(builder =>
                 {
@@ -54,6 +55,9 @@ namespace LocalFriendzApi.Commom.Api
             builder
                 .Services
                 .AddTransient<IContactRepository, ContactRepository>();
+
+            builder.Services.AddSingleton<IRabbitMQService, RabbitMQService>();
+
         }
 
         public static void AddDocumentation(this WebApplicationBuilder builder)
