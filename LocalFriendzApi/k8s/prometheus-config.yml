@@ -11,7 +11,7 @@ data:
       - job_name: 'dotnet_app'
         metrics_path: /metrics
         static_configs:
-          - targets: ['172.31.62.240:30006']
+          - targets: ['172.23.86.154:30006']
 
       - job_name: 'prometheus'
         static_configs:
