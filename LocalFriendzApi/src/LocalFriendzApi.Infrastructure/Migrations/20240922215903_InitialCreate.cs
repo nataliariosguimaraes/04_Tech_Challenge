@@ -19,7 +19,8 @@ namespace LocalFriendzApi.Infrastructure.Migrations
                     name = table.Column<string>(type: "VARCHAR", maxLength: 100, nullable: false),
                     phone = table.Column<string>(type: "VARCHAR", maxLength: 20, nullable: false),
                     DDD = table.Column<string>(type: "VARCHAR", maxLength: 4, nullable: false),
-                    email = table.Column<string>(type: "VARCHAR", maxLength: 40, nullable: false)
+                    email = table.Column<string>(type: "VARCHAR", maxLength: 40, nullable: false),
+                    FeedbackMessage = table.Column<string>(type: "VARCHAR", maxLength: 40, nullable: true)
                 },
                 constraints: table =>
                 {

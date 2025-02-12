@@ -9,6 +9,7 @@ namespace LocalFriendzApi.Core.Models
         public string? Phone { get; set; }
         public string? DDD { get; set; }
         public string? Email { get; set; }
+        public string? FeedbackMessage { get; set; }
 
         public static Contact RequestMapper(CreateContactRequest request)
         {
@@ -19,7 +20,8 @@ namespace LocalFriendzApi.Core.Models
                 Name = request.Name,
                 Phone = request.Phone,
                 DDD = request.DDD,
-                Email = request.Email
+                Email = request.Email,
+                FeedbackMessage = request.FeedbackMessage
             };
         }
     }

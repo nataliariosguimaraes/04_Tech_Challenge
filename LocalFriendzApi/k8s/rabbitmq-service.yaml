@@ -16,4 +16,4 @@ spec:
     port: 15672
     targetPort: 15672
     nodePort: 30172  # Adicione esta linha
-  type: NodePort  # Altere de LoadBalancer para NodePort
+  type: NodePort  # Altere de LoadBalancer para NodePort		  

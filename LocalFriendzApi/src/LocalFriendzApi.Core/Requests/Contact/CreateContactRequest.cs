@@ -6,5 +6,7 @@
         public string? Phone { get; set; }
         public string? DDD { get; set; }
         public string? Email { get; set; }
+
+         public string? FeedbackMessage { get; set; }
     }
 }

@@ -56,6 +56,12 @@ namespace LocalFriendzApi.Infrastructure.Migrations
                         .HasColumnType("VARCHAR")
                         .HasColumnName("phone");
 
+                    b.Property<string>("FeedbackMessage")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("FeedbackMessage");
+
                     b.HasKey("IdContact");
 
                     b.ToTable("TB_CONTACT", (string)null);

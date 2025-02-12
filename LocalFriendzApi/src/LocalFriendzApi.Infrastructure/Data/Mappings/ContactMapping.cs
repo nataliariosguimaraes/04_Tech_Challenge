@@ -37,6 +37,12 @@ namespace LocalFriendzApi.Infrastructure.Data.Mappings
                 .HasColumnName("email")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(40);
+
+            builder.Property(c => c.FeedbackMessage)
+     .IsRequired(false) // Permite valores nulos, caso necessário
+     .HasColumnName("FeedbackMessage")
+     .HasColumnType("VARCHAR")
+     .HasMaxLength(40);
         }
     }
 }

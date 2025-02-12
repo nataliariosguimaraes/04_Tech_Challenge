@@ -15,8 +15,10 @@ data:
         phone varchar NOT NULL,
         "DDD" varchar NOT NULL,
         email varchar NOT NULL,
+        "FeedbackMessage" varchar  NULL,
         CONSTRAINT "PK_TB_CONTACT" PRIMARY KEY (id_contact)
     );
+  
     DO $$ BEGIN
         RAISE NOTICE 'Tabela TB_CONTACT criada com sucesso!';
     END $$;
