@@ -1,6 +1,4 @@
-Aqui está o texto atualizado com as tecnologias adicionadas:  
 
----
 
 # 🚀 Arquitetura do Desafio - Kubernetes, Mensageria e Monitoramento  
 
